@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lent", "lent\lent.csproj", "{AB071A87-8852-429B-81D7-B8DD3B763281}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB071A87-8852-429B-81D7-B8DD3B763281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB071A87-8852-429B-81D7-B8DD3B763281}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB071A87-8852-429B-81D7-B8DD3B763281}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB071A87-8852-429B-81D7-B8DD3B763281}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A5F3E46A-577B-4F4F-A9B0-EF6803EA9A2B}
+	EndGlobalSection
+EndGlobal
