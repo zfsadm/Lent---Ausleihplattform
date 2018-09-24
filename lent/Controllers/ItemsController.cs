@@ -13,18 +13,37 @@ namespace lent.Controllers
     {
         private readonly lentContext _context;
 
+
+        //eigene Methoden
+        public async Task<IActionResult> MyItems(int ID)
+        {
+            var lentContext = _context.Item.Include(i => i.Owner);
+            List<lent.Models.Item> OwnerItems = _context.Item.Where(i => i.Owner.ID == ID).ToList();
+            return View("Index", OwnerItems);
+        }
+
+        public async Task<IActionResult> MyBorrowedItems(int ID)
+        {
+            var lentContext = _context.Item.Include(i => i.Owner);
+            List<lent.Models.Item> BorrowedItems = _context.Item.Where(i => i.Borrower.ID == ID).ToList();
+            return View("Index", BorrowedItems);
+        }
+        //Ende eigene Methoden
+
+
         public ItemsController(lentContext context)
         {
             _context = context;
         }
 
-        // GET: Items
+        // GET: Items1
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Item.ToListAsync());
+            var lentContext = _context.Item.Include(i => i.Borrower).Include(i => i.Owner);
+            return View(await lentContext.ToListAsync());
         }
 
-        // GET: Items/Details/5
+        // GET: Items1/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,6 +52,8 @@ namespace lent.Controllers
             }
 
             var item = await _context.Item
+                .Include(i => i.Borrower)
+                .Include(i => i.Owner)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (item == null)
             {
@@ -42,18 +63,20 @@ namespace lent.Controllers
             return View(item);
         }
 
-        // GET: Items/Create
+        // GET: Items1/Create
         public IActionResult Create()
         {
+            ViewData["BorrowerForeignkey"] = new SelectList(_context.User, "ID", "EMail");
+            ViewData["OwnerForeignkey"] = new SelectList(_context.User, "ID", "EMail");
             return View();
         }
 
-        // POST: Items/Create
+        // POST: Items1/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Category,Name,Owner,Borrower,Discription,Status")] Item item)
+        public async Task<IActionResult> Create([Bind("ID,Category,Name,OwnerForeignkey,BorrowerForeignkey,Discription,Status")] Item item)
         {
             if (ModelState.IsValid)
             {
@@ -61,10 +84,12 @@ namespace lent.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["BorrowerForeignkey"] = new SelectList(_context.User, "ID", "EMail", item.BorrowerForeignkey);
+            ViewData["OwnerForeignkey"] = new SelectList(_context.User, "ID", "EMail", item.OwnerForeignkey);
             return View(item);
         }
 
-        // GET: Items/Edit/5
+        // GET: Items1/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,15 +102,17 @@ namespace lent.Controllers
             {
                 return NotFound();
             }
+            ViewData["BorrowerForeignkey"] = new SelectList(_context.User, "ID", "EMail", item.BorrowerForeignkey);
+            ViewData["OwnerForeignkey"] = new SelectList(_context.User, "ID", "EMail", item.OwnerForeignkey);
             return View(item);
         }
 
-        // POST: Items/Edit/5
+        // POST: Items1/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Category,Name,Owner,Borrower,Discription,Status")] Item item)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Category,Name,OwnerForeignkey,BorrowerForeignkey,Discription,Status")] Item item)
         {
             if (id != item.ID)
             {
@@ -112,10 +139,12 @@ namespace lent.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["BorrowerForeignkey"] = new SelectList(_context.User, "ID", "EMail", item.BorrowerForeignkey);
+            ViewData["OwnerForeignkey"] = new SelectList(_context.User, "ID", "EMail", item.OwnerForeignkey);
             return View(item);
         }
 
-        // GET: Items/Delete/5
+        // GET: Items1/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,6 +153,8 @@ namespace lent.Controllers
             }
 
             var item = await _context.Item
+                .Include(i => i.Borrower)
+                .Include(i => i.Owner)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (item == null)
             {
@@ -133,7 +164,7 @@ namespace lent.Controllers
             return View(item);
         }
 
-        // POST: Items/Delete/5
+        // POST: Items1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

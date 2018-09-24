@@ -23,14 +23,12 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Owner" class="control-label"></label>
-                <input asp-for="Owner" class="form-control" />
-                <span asp-validation-for="Owner" class="text-danger"></span>
+                <label asp-for="OwnerForeignkey" class="control-label"></label>
+                <select asp-for="OwnerForeignkey" class ="form-control" asp-items="ViewBag.OwnerForeignkey"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Borrower" class="control-label"></label>
-                <input asp-for="Borrower" class="form-control" />
-                <span asp-validation-for="Borrower" class="text-danger"></span>
+                <label asp-for="BorrowerForeignkey" class="control-label"></label>
+                <select asp-for="BorrowerForeignkey" class ="form-control" asp-items="ViewBag.BorrowerForeignkey"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Discription" class="control-label"></label>

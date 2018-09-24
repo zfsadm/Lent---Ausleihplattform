@@ -5,6 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180921100255_Initial.cs" />
+    <Compile Remove="Migrations\20180921100255_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20180921115538_second.cs" />
+    <Compile Remove="Migrations\20180921115538_second.Designer.cs" />
+    <Compile Remove="Migrations\20180924084546_ThirdCreate.cs" />
+    <Compile Remove="Migrations\20180924084546_ThirdCreate.Designer.cs" />
+    <Compile Remove="Migrations\20180924085012_FourthCreate.cs" />
+    <Compile Remove="Migrations\20180924085012_FourthCreate.Designer.cs" />
+    <Compile Remove="Migrations\20180924085937_third.cs" />
+    <Compile Remove="Migrations\20180924085937_third.Designer.cs" />
+    <Compile Remove="Migrations\20180924091634_initial.cs" />
+    <Compile Remove="Migrations\20180924091634_initial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.3">
       <PrivateAssets>all</PrivateAssets>

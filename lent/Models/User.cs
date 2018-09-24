@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,7 +33,11 @@ namespace lent.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [InverseProperty("Borrower")]
         public List<Item> borrowedItems { get; set; }
+
+        [Required]
+        [InverseProperty("Owner")]
         public List<Item> ownedItems { get; set; }
     }
 }

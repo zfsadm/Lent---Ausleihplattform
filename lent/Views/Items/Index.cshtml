@@ -43,10 +43,10 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Owner)
+                @Html.DisplayFor(modelItem => item.Owner.EMail)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Borrower)
+                @Html.DisplayFor(modelItem => item.Borrower.EMail)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Discription)
