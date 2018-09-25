@@ -1,7 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
+    <StartupObject></StartupObject>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +21,12 @@
     <Compile Remove="Migrations\20180924085937_third.Designer.cs" />
     <Compile Remove="Migrations\20180924091634_initial.cs" />
     <Compile Remove="Migrations\20180924091634_initial.Designer.cs" />
+    <Compile Remove="Migrations\20180924132930_initial.cs" />
+    <Compile Remove="Migrations\20180924132930_initial.Designer.cs" />
+    <Compile Remove="Migrations\20180925080356_initial.cs" />
+    <Compile Remove="Migrations\20180925080356_initial.Designer.cs" />
+    <Compile Remove="Migrations\20180925082303_initial.cs" />
+    <Compile Remove="Migrations\20180925082303_initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

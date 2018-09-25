@@ -66,8 +66,11 @@ namespace lent.Controllers
         // GET: Items1/Create
         public IActionResult Create()
         {
-            ViewData["BorrowerForeignkey"] = new SelectList(_context.User, "ID", "EMail");
-            ViewData["OwnerForeignkey"] = new SelectList(_context.User, "ID", "EMail");
+            ViewData["OwnerForeignkey"] = new SelectList(_context.User, "ID", "Login");
+            List<User> ulist = _context.User.ToList();
+            ulist.Add(CreateDummy());
+
+            ViewData["BorrowerForeignkey"] = new SelectList(ulist, "ID", "Login", CreateDummy().ID);
             return View();
         }
 
@@ -80,13 +83,38 @@ namespace lent.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (item.Status == false)
+                {
+                    item.BorrowerForeignkey = null;
+
+                }
+                else
+                    item.BorrowerForeignkey = item.OwnerForeignkey;
                 _context.Add(item);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BorrowerForeignkey"] = new SelectList(_context.User, "ID", "EMail", item.BorrowerForeignkey);
-            ViewData["OwnerForeignkey"] = new SelectList(_context.User, "ID", "EMail", item.OwnerForeignkey);
+            ViewData["OwnerForeignkey"] = new SelectList(_context.User, "ID", "Login", item.OwnerForeignkey);
+            item.BorrowerForeignkey = CreateDummy().ID;
+            _context.User.Add(CreateDummy());
+            
+            ViewData["BorrowerForeignkey"] = new SelectList(_context.User, "ID", "Login", item.BorrowerForeignkey);
+
             return View(item);
+        }
+
+        //##########  EIGENE METHODEN ################
+        private User CreateDummy()
+        {
+            User dummy = new User();
+            dummy.Login = "DUMMY";
+            dummy.Lastname = "NICHT VERLIEHEN";
+            dummy.Surname = "test";
+            dummy.Password = "dummypassword";
+            dummy.EMail = "dummy@dummy.de";
+            dummy.ID = -1; //da in DB keine negativen int existieren
+
+            return dummy;
         }
 
         // GET: Items1/Edit/5

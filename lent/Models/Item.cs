@@ -15,11 +15,16 @@ namespace lent.Models
         [ForeignKey("OwnerForeignkey")]
         public User Owner { get; set; }
 
-        public int BorrowerForeignkey { get; set; }
+        public int? BorrowerForeignkey { get; set; }
         [ForeignKey("BorrowerForeignkey")]
         public User Borrower { get; set; }
         public string Discription { get; set; }
-        public bool Status { get; set; } 
+        
+        /// <summary>
+        /// Status == true meint, dass der Gegenstand verliehen ist
+        /// </summary>
+        public bool Status { get; set; }
+
         const int MaxLength = 2500;
         
 

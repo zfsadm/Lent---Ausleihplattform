@@ -36,7 +36,6 @@ namespace lent.Models
         [InverseProperty("Borrower")]
         public List<Item> borrowedItems { get; set; }
 
-        [Required]
         [InverseProperty("Owner")]
         public List<Item> ownedItems { get; set; }
     }
