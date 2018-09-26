@@ -28,6 +28,9 @@ namespace lent.Controllers
             List<lent.Models.Item> BorrowedItems = _context.Item.Where(i => i.Borrower.ID == ID).ToList();
             return View("Index", BorrowedItems);
         }
+        
+        
+
         //Ende eigene Methoden
 
 
@@ -37,10 +40,18 @@ namespace lent.Controllers
         }
 
         // GET: Items1
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string id)
         {
             var lentContext = _context.Item.Include(i => i.Borrower).Include(i => i.Owner);
-            return View(await lentContext.ToListAsync());
+        //Suche
+            var item = from i in _context.Item
+                       select i ;
+
+            if (!String.IsNullOrEmpty(id))
+            {
+                item = item.Where(s => s.Name.Contains(id));
+            }
+            return View(await item.ToListAsync());
         }
 
         // GET: Items1/Details/5
@@ -70,6 +81,8 @@ namespace lent.Controllers
             List<User> ulist = _context.User.ToList();
             ulist.Add(CreateDummy());
 
+            ViewData["CategoryForeignkey"] = new SelectList(_context.Category, "ID", "Name");
+
             ViewData["BorrowerForeignkey"] = new SelectList(ulist, "ID", "Login", CreateDummy().ID);
             return View();
         }
@@ -79,7 +92,7 @@ namespace lent.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Category,Name,OwnerForeignkey,BorrowerForeignkey,Discription,Status")] Item item)
+        public async Task<IActionResult> Create([Bind("ID,Kategorie,CategoryForeignkey,Name,OwnerForeignkey,BorrowerForeignkey,Discription,Status")] Item item)
         {
             if (ModelState.IsValid)
             {
@@ -99,6 +112,7 @@ namespace lent.Controllers
             _context.User.Add(CreateDummy());
             
             ViewData["BorrowerForeignkey"] = new SelectList(_context.User, "ID", "Login", item.BorrowerForeignkey);
+            ViewData["CategoryForeignkey"] = new SelectList(_context.Category, "ID", "Name", item.CategoryForeignkey);
 
             return View(item);
         }

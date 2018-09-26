@@ -9,7 +9,9 @@ namespace lent.Models
 {
     public class Item
     {   public int ID { get; set; }
-        public string Category { get; set; }
+        public int CategoryForeignkey { get; set; }
+        [ForeignKey("CategoryForeignkey")]
+        public Category Kategorie { get; set; }
         public string Name { get; set; }
         public int OwnerForeignkey { get; set; }
         [ForeignKey("OwnerForeignkey")]

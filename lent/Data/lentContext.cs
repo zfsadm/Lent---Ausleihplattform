@@ -18,6 +18,8 @@ namespace lent.Models
 
         public DbSet<lent.Models.User> User { get; set; }
 
+        public DbSet<lent.Models.Category> Category { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Item>()
@@ -31,6 +33,11 @@ namespace lent.Models
             modelBuilder.Entity<Item>()
                 .HasOne(i => i.Borrower)
                 .WithMany(b => b.borrowedItems).OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Item>()
+               .HasOne(i => i.Kategorie)
+               .WithMany(k => k.CategoriestItems).OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

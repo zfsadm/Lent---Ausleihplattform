@@ -8,6 +8,20 @@ namespace lent.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Info = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -30,7 +44,7 @@ namespace lent.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Category = table.Column<string>(nullable: true),
+                    CategoryForeignkey = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     OwnerForeignkey = table.Column<int>(nullable: false),
                     BorrowerForeignkey = table.Column<int>(nullable: true),
@@ -47,6 +61,12 @@ namespace lent.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_Item_Category_CategoryForeignkey",
+                        column: x => x.CategoryForeignkey,
+                        principalTable: "Category",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Item_User_OwnerForeignkey",
                         column: x => x.OwnerForeignkey,
                         principalTable: "User",
@@ -58,6 +78,11 @@ namespace lent.Migrations
                 name: "IX_Item_BorrowerForeignkey",
                 table: "Item",
                 column: "BorrowerForeignkey");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Item_CategoryForeignkey",
+                table: "Item",
+                column: "CategoryForeignkey");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Item_OwnerForeignkey",
@@ -72,6 +97,9 @@ namespace lent.Migrations
 
             migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "Category");
         }
     }
 }

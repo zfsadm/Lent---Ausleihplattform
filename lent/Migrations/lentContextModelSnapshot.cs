@@ -19,6 +19,21 @@ namespace lent.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("lent.Models.Category", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Info");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Category");
+                });
+
             modelBuilder.Entity("lent.Models.Item", b =>
                 {
                     b.Property<int>("ID")
@@ -27,7 +42,7 @@ namespace lent.Migrations
 
                     b.Property<int?>("BorrowerForeignkey");
 
-                    b.Property<string>("Category");
+                    b.Property<int>("CategoryForeignkey");
 
                     b.Property<string>("Discription");
 
@@ -40,6 +55,8 @@ namespace lent.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("BorrowerForeignkey");
+
+                    b.HasIndex("CategoryForeignkey");
 
                     b.HasIndex("OwnerForeignkey");
 
@@ -77,6 +94,11 @@ namespace lent.Migrations
                     b.HasOne("lent.Models.User", "Borrower")
                         .WithMany("borrowedItems")
                         .HasForeignKey("BorrowerForeignkey")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("lent.Models.Category", "Kategorie")
+                        .WithMany("CategoriestItems")
+                        .HasForeignKey("CategoryForeignkey")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("lent.Models.User", "Owner")

@@ -9,31 +9,22 @@ using lent.Models;
 
 namespace lent.Controllers
 {
-    public class UsersController : Controller
+    public class CategoriesController : Controller
     {
         private readonly lentContext _context;
 
-        public UsersController(lentContext context)
+        public CategoriesController(lentContext context)
         {
             _context = context;
         }
 
-        // GET: Users1
-        public async Task<IActionResult> Index(string id)
+        // GET: Categories
+        public async Task<IActionResult> Index()
         {
-        //Suche
-            var user = from i in _context.User
-                       select i;
-
-            if (!String.IsNullOrEmpty(id))
-            {
-                user = user.Where(s => s.Login.Contains(id));
-            }
-            return View(await user.ToListAsync());
-        
+            return View(await _context.Category.ToListAsync());
         }
 
-        // GET: Users1/Details/5
+        // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,39 +32,39 @@ namespace lent.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var category = await _context.Category
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (user == null)
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(category);
         }
 
-        // GET: Users1/Create
+        // GET: Categories/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Users1/Create
+        // POST: Categories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Login,Surname,Lastname,EMail,Password")] User user)
+        public async Task<IActionResult> Create([Bind("ID,Name,Info")] Category category)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(category);
         }
 
-        // GET: Users1/Edit/5
+        // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,22 +72,22 @@ namespace lent.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var category = await _context.Category.FindAsync(id);
+            if (category == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(category);
         }
 
-        // POST: Users1/Edit/5
+        // POST: Categories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Login,Surname,Lastname,EMail,Password")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Info")] Category category)
         {
-            if (id != user.ID)
+            if (id != category.ID)
             {
                 return NotFound();
             }
@@ -105,12 +96,12 @@ namespace lent.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.ID))
+                    if (!CategoryExists(category.ID))
                     {
                         return NotFound();
                     }
@@ -121,10 +112,10 @@ namespace lent.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(category);
         }
 
-        // GET: Users1/Delete/5
+        // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,30 +123,30 @@ namespace lent.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var category = await _context.Category
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (user == null)
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(category);
         }
 
-        // POST: Users1/Delete/5
+        // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            _context.User.Remove(user);
+            var category = await _context.Category.FindAsync(id);
+            _context.Category.Remove(category);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool CategoryExists(int id)
         {
-            return _context.User.Any(e => e.ID == id);
+            return _context.Category.Any(e => e.ID == id);
         }
     }
 }

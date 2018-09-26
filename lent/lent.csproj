@@ -27,6 +27,12 @@
     <Compile Remove="Migrations\20180925080356_initial.Designer.cs" />
     <Compile Remove="Migrations\20180925082303_initial.cs" />
     <Compile Remove="Migrations\20180925082303_initial.Designer.cs" />
+    <Compile Remove="Migrations\20180925095715_initial.cs" />
+    <Compile Remove="Migrations\20180925095715_initial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\contact.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
