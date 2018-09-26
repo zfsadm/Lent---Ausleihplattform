@@ -27,6 +27,8 @@
     <Compile Remove="Migrations\20180925080356_initial.Designer.cs" />
     <Compile Remove="Migrations\20180925082303_initial.cs" />
     <Compile Remove="Migrations\20180925082303_initial.Designer.cs" />
+    <Compile Remove="Migrations\Auth\20180926083855_CreateIdentitySchema.cs" />
+    <Compile Remove="Migrations\Auth\20180926083855_CreateIdentitySchema.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +38,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Services\" />
   </ItemGroup>
 
 </Project>

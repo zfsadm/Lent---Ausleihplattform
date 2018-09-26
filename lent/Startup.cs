@@ -38,6 +38,12 @@ namespace lent
 
             services.AddDbContext<lentContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("lentContext")));
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Manage", policy =>
+                    policy.RequireRole("Administrator"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +61,7 @@ namespace lent
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>

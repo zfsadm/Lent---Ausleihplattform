@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using lent.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace lent.Controllers
 {
@@ -118,6 +119,7 @@ namespace lent.Controllers
         }
 
         // GET: Items1/Edit/5
+        [Authorize("Manage")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -139,6 +141,7 @@ namespace lent.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize("Manage")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Category,Name,OwnerForeignkey,BorrowerForeignkey,Discription,Status")] Item item)
         {
